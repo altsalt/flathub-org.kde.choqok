@@ -1,0 +1,39 @@
+app-id: org.kde.choqok
+runtime: org.kde.Platform
+runtime-version: '5.15'
+sdk: org.kde.Sdk
+command: choqok
+rename-appdata-file: org.kde.choqok.appdata.xml
+rename-icon: choqok
+copy-icon: true
+finish-args:
+  - '--device=dri'
+  - '--filesystem=host'
+  - '--share=ipc'
+  - '--share=network'
+  - '--socket=wayland'
+  - '--socket=fallback-x11'
+  - '--socket=pulseaudio'
+  - '--talk-name=org.kde.StatusNotifierWatcher'
+  - '--talk-name=org.freedesktop.Notifications'
+cleanup:
+  - '/include'
+  - '/share/man'
+  - '/share/info'
+  - '*.la'
+  - '*.a'
+modules:
+  - name: qca
+    buildsystem: cmake-ninja
+    sources:
+      - type: archive
+        url: 'https://download.kde.org/stable/qca/2.3.1/qca-2.3.1.tar.xz'
+        sha256: 'c13851109abefc4623370989fae3a745bf6b1acb3c2a13a8958539823e974e4b'
+  - name: choqok
+    buildsystem: cmake-ninja
+    config-opts:
+      - '-DKDE_INSTALL_USE_QT_SYS_PATHS=OFF'
+    sources:
+      - type: archive
+        url: 'https://github.com/KDE/choqok/archive/v1.7.0.tar.gz'
+        sha256: '05806e5189d651097d8d35f035af11c67af9b804457b2aa1a11ef5fc95581cc8'
